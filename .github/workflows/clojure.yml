@@ -30,7 +30,7 @@ jobs:
         onlyNewer: true
         settings: 'sftp:auto-confirm=yes'
           # Mirror command options
-        localDir: 'public/build'
+        localDir: 'public/asdasd'
         remoteDir: 'lehnhausen.dev'
         reverse: true
         ignoreFile: '.lftp_ignore'

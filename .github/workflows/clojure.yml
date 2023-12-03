@@ -19,19 +19,4 @@ jobs:
     - name: Build notebook
       run: lein run
     - name: Deploy files via SFTP
-      uses: pressidium/lftp-mirror-action@v1
-      with:
-        # SFTP credentials
-        host: ${{ secrets.FTP_PATH }}
-        port: 22
-        user: ${{ secrets.FTP_USER }}
-        pass: ${{ secrets.FTP_PASS }}
-          # lftp settings
-        onlyNewer: true
-        settings: 'sftp:auto-confirm=yes'
-          # Mirror command options
-        localDir: 'public/asdasd'
-        remoteDir: 'lehnhausen.dev'
-        reverse: true
-        ignoreFile: '.lftp_ignore'
-        options: '--verbose'
+      run: ls

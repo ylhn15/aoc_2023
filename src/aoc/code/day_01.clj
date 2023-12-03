@@ -27,13 +27,27 @@
 ; In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 
 ; Consider your entire calibration document. What is the sum of all of the calibration values?
-
 (def example-input
-  "1abc2"
-  "pqr3stu8vwx"
-  "a1b2c3d4e5f"
-  "treb7uchet")
+  "1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet")
 
-(print example-input)
+(def real-input
+  (slurp "input/day_01/input.txt"))
 
+(defn get-numbers-from-string [input]
+  (map #(re-seq #"\d" %) 
+       (str/split-lines input)))
 
+(defn concat-number-as-string [input]
+  (map #(str (first %)(last %))
+    (get-numbers-from-string input)))
+
+(defn solution-1 [input]
+  (reduce + (map #(Integer. %) (concat-number-as-string input))))
+
+(defn solution-1 [input]
+  (reduce + (map #(Integer. %) (concat-number-as-string input))))
+
+(solution-1 real-input)

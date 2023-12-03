@@ -1,7 +1,9 @@
 ^{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns aoc.code.day_01
   (:gen-class)
-  (:require [clojure.string :as str]))
+  (:require
+   [aoc.helpers :refer [format-input]]
+   [clojure.string :as str]))
 
 ; --- Day 1: Trebuchet?! ---
 
@@ -27,27 +29,51 @@
 ; In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 
 ; Consider your entire calibration document. What is the sum of all of the calibration values?
-(def example-input
-  "1abc2
-pqr3stu8vwx
-a1b2c3d4e5f
-treb7uchet")
-
-(def real-input
-  (slurp "input/day_01/input.txt"))
+{:nextjournal.clerk/visibility {:result :hide}}
 
 (defn get-numbers-from-string [input]
-  (map #(re-seq #"\d" %) 
-       (str/split-lines input)))
+  (map #(re-seq #"\d" %)
+       (format-input input)))
 
 (defn concat-number-as-string [input]
-  (map #(str (first %)(last %))
-    (get-numbers-from-string input)))
+  (map #(str (first %) (last %))
+       (get-numbers-from-string input)))
 
 (defn solution-1 [input]
   (reduce + (map #(Integer. %) (concat-number-as-string input))))
 
-(defn solution-1 [input]
-  (reduce + (map #(Integer. %) (concat-number-as-string input))))
+{:nextjournal.clerk/visibility {:result :show}}
+(solution-1 "input/day_01/input.txt")
 
-(solution-1 real-input)
+; --- Part Two ---
+;
+; Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
+;
+; Equipped with this new information, you now need to find the real first and last digit on each line. For example:
+;
+; two1nine
+; eightwothree
+; abcone2threexyz
+; xtwone3four
+; 4nineeightseven2
+; zoneight234
+; 7pqrstsixteen
+;
+; In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
+;
+; What is the sum of all of the calibration values?
+
+{:nextjournal.clerk/visibility {:result :hide}}
+(defonce number-string-mapping
+  {"one" "1",
+   "two" "2",
+   "three" "3",
+   "four" "4",
+   "five" "5",
+   "six" "6",
+   "seven" "7",
+   "eight" "8",
+   "nine" "9"})
+
+{:nextjournal.clerk/visibility {:result :show}}
+(defn solution-2 [input] input)

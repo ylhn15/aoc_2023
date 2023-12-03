@@ -19,4 +19,4 @@ jobs:
     - name: Build notebook
       run: lein run
     - name: Deploy files via SFTP
-      run: ls
+      run: ls public/build

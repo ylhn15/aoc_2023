@@ -2,7 +2,8 @@
 (ns aoc.code.day_01
   (:gen-class)
   (:require
-   [aoc.helpers :refer [format-input]]))
+    [aoc.helpers :refer [format-input]]
+    [clojure.string :as str]))
 
 ;# --- Day 1: Trebuchet?! ---
 
@@ -32,7 +33,7 @@
 
 (defn get-numbers-from-string [input]
   (map #(re-seq #"\d" %)
-       (format-input input)))
+        input))
 
 (defn concat-number-as-string [input]
   (map #(str (first %) (last %))
@@ -42,7 +43,7 @@
   (reduce + (map #(Integer. %) (concat-number-as-string input))))
 
 {:nextjournal.clerk/visibility {:result :show}}
-(solution-1 "input/day_01/input.txt")
+(solution-1 (format-input "input/day_01/input.txt"))
 
 ;# --- Part Two ---
 ;
@@ -57,13 +58,14 @@
 ; 4nineeightseven2
 ; zoneight234
 ; 7pqrstsixteen
+; oneight
 ; ```
-; In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
+; In this example, the calibration values are 29, 83, 13, 24, 42, 14, 76, and 18. Adding these together produces 281.
 ;
 ; What is the sum of all of the calibration values?
 
 {:nextjournal.clerk/visibility {:result :hide}}
-(defonce number-string-mapping
+(defonce string->number
   {"one" "1",
    "two" "2",
    "three" "3",
@@ -74,5 +76,26 @@
    "eight" "8",
    "nine" "9"})
 
+(defn find-numbers-and-number-words []
+  (re-pattern (str "\\d|(?=(" (str/join "|" (keys string->number)) "))")))
+
+(defn find-number-words []
+  (re-pattern (str/join "|" (keys string->number)))) 
+
+(defn extract-words-to-replace [input]
+  (->> input
+       (map #(re-seq (find-numbers-and-number-words) %))))
+
+(defn replace-string-with-number [input]
+  (->> input
+       extract-words-to-replace
+       (map #(str/replace % (find-number-words) string->number))))
+
+(defn solution-2 [input] 
+  (->> input
+       replace-string-with-number
+       concat-number-as-string
+       solution-1))
+
 {:nextjournal.clerk/visibility {:result :show}}
-(defn solution-2 [input] input)
+(solution-2 (format-input "input/day_01/input.txt"))
